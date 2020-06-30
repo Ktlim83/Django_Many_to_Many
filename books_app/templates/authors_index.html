@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <title>Authors</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="col-md-3">
+            <h2>Add an Author</h2>
+            <form action="/new_author" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="first_name">First Name</label>
+                    <input type="text" name="first_name" id="first_name" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="last_name">Last Name</label>
+                    <input type="text" name="last_name" id="last_name" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="desc">Notes</label>
+                    <input type="text" name="notes" id="notes" class="form-control">
+                </div>
+                <button class="btn btn-primary">Add</button>
+            </form>
+        </div>
+        <table class="table table-dark">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Full Name</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for author in all_authors %}
+                <tr>
+                    <td>{{ author.id }}</td>
+                    <td>{{ author.first_name }} {{author.last_name}}</td>
+                    <td><a href="view_author/{{ author.id }}">View</a> |
+                        <a href="delete_book/{{ author.id }}">Delete</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <a href="/books_page" type="button" class="btn btn-success">Go to Books</a>
+</body>
+
+</html>

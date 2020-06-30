@@ -1,0 +1,217 @@
+In [1]: Book.objects.create(title="C Sharp")
+---------------------------------------------------------------------------
+NameError                                 Traceback (most recent call last)
+<ipython-input-1-c22ece8f625f> in <module>
+----> 1 Book.objects.create(title="C Sharp")
+
+NameError: name 'Book' is not defined
+
+In [2]: from books_app.models import *
+
+In [3]: Book.objects.create(title="C Sharp")
+Out[3]: <Book: 1 C Sharp>
+
+In [4]: Book.objects.create(title="Java")
+Out[4]: <Book: 2 Java>
+
+In [5]: Book.objects.create(title="Python")
+Out[5]: <Book: 3 Python>
+
+In [6]: Book.objects.create(title="PHP")
+Out[6]: <Book: 4 PHP>
+
+In [7]: Book.objects.create(title="Ruby")
+Out[7]: <Book: 5 Ruby>
+
+In [8]: Author.objects.create(first_name="Jane",last_name="Austen")
+Out[8]: <Author: 1 Jane Austen>
+
+In [9]: Author.objects.create(first_name="Emily",last_name="Dickenson")
+Out[9]: <Author: 2 Emily Dickenson>
+
+In [10]: Author.objects.create(first_name="Fyodor",last_name="Dostoeevsky")
+Out[10]: <Author: 3 Fyodor Dostoeevsky>
+
+In [11]: Author.objects.create(first_name="William",last_name="Shakespear")
+Out[11]: <Author: 4 William Shakespear>
+
+In [12]: Author.objects.create(first_name="Lau",last_name="Tzu")
+Out[12]: <Author: 5 Lau Tzu>
+
+In [13]: Book.objects.get(id=1)
+Out[13]: <Book: 1 C Sharp>
+
+In [14]: book_one = Book.objects.get(id=1)
+
+In [15]: book_one
+Out[15]: <Book: 1 C Sharp>
+
+In [16]: book_one.title = "C#"
+
+In [17]: book_one.save()
+
+In [18]: book_one
+Out[18]: <Book: 1 C#>
+
+In [19]: author_four = Author.objects.get(id=4)
+
+In [20]: author_four.first_name = "Bill"
+
+In [21]: author_four.save()
+
+In [22]: author_four
+Out[22]: <Author: 4 Bill Shakespear>
+
+In [23]: book_one
+Out[23]: <Book: 1 C#>
+
+In [24]: book_two = Book.objects.get(id=2)
+
+In [25]: book_two
+Out[25]: <Book: 2 Java>
+
+In [26]: author_one.books.add(book_one)
+---------------------------------------------------------------------------
+NameError                                 Traceback (most recent call last)
+<ipython-input-26-b46c396366a5> in <module>
+----> 1 author_one.books.add(book_one)
+
+NameError: name 'author_one' is not defined
+
+In [27]: author_one
+---------------------------------------------------------------------------
+NameError                                 Traceback (most recent call last)
+<ipython-input-27-65bc6ad8d9fb> in <module>
+----> 1 author_one
+
+NameError: name 'author_one' is not defined
+
+In [28]: author_one = Author.objects.get(id=1)
+
+In [29]: author_one.books.add(book_one)
+
+In [30]: author_one.books.add(book_two)
+
+In [31]: author_two = Author.objects.get(id=2)
+
+In [32]: author_two.books.add(book_one)
+
+In [33]: author_two.books.add(book_two)
+
+In [34]: book_three = Book.objects.get(id=3)
+
+In [35]: author_two.books.add(book_three)
+
+In [36]: author_three = Author.objects.get(id=3)
+
+In [37]: book_four = Book.objects.get(id=4)
+
+In [38]: book_five = Book.objects.get(id=5)
+
+In [39]: author_three.books.add(book_one)
+
+In [40]: author_three.books.add(book_two)
+
+In [41]: author_three.books.add(book_three)
+
+In [42]: author_three.books.add(book_four)
+
+In [43]: author_four
+Out[43]: <Author: 4 Bill Shakespear>
+
+In [44]: author_four.books.add(book_one)
+
+In [45]: author_four.books.add(book_two)
+
+In [46]: author_four.books.add(book_three)
+
+In [47]: author_four.books.add(book_four)
+
+In [48]: author_four.books.add(book_five)
+
+In [49]: book_three.books.authors
+---------------------------------------------------------------------------
+AttributeError                            Traceback (most recent call last)
+<ipython-input-49-e1c190f625cd> in <module>
+----> 1 book_three.books.authors
+
+AttributeError: 'Book' object has no attribute 'books'
+
+In [50]: book_three.authors
+Out[50]: <django.db.models.fields.related_descriptors.create_forward_many_to_many_manager.<locals>.ManyRelatedManager at 0x1904070>
+
+In [51]: book_three.authors.first_name
+---------------------------------------------------------------------------
+AttributeError                            Traceback (most recent call last)
+<ipython-input-51-8ed4646d578f> in <module>
+----> 1 book_three.authors.first_name
+
+AttributeError: 'ManyRelatedManager' object has no attribute 'first_name'
+
+In [52]: Author.objects.all()
+Out[52]: <QuerySet [<Author: 1 Jane Austen>, <Author: 2 Emily Dickenson>, <Author: 3 Fyodor Dostoeevsky>, <Author: 4 Bill Shakespear>, <Author: 5 Lau Tzu>]>
+
+In [53]: Book.objects.all()
+Out[53]: <QuerySet [<Book: 1 C#>, <Book: 2 Java>, <Book: 3 Python>, <Book: 4 PHP>, <Book: 5 Ruby>]>
+
+In [54]: book_three.authors.all()
+Out[54]: <QuerySet [<Author: 2 Emily Dickenson>, <Author: 3 Fyodor Dostoeevsky>, <Author: 4 Bill Shakespear>]>
+
+In [55]: book_three.authors.get(id=1)
+---------------------------------------------------------------------------
+DoesNotExist                              Traceback (most recent call last)
+<ipython-input-55-212ebd28260f> in <module>
+----> 1 book_three.authors.get(id=1)
+
+~\Documents\CodingDojo\CodingDojoAssignments\python_stack\my_enviroments\djangoPy3Env\lib\site-packages\django\db\models\manager.py in manager_method(self, *args, **kwargs)
+     80         def create_method(name, method):
+     81             def manager_method(self, *args, **kwargs):
+---> 82                 return getattr(self.get_queryset(), name)(*args, **kwargs)
+     83             manager_method.__name__ = method.__name__
+     84             manager_method.__doc__ = method.__doc__
+
+~\Documents\CodingDojo\CodingDojoAssignments\python_stack\my_enviroments\djangoPy3Env\lib\site-packages\django\db\models\query.py in get(self, *args, **kwargs)
+    404             return clone._result_cache[0]
+    405         if not num:
+--> 406             raise self.model.DoesNotExist(
+    407                 "%s matching query does not exist." %
+    408                 self.model._meta.object_name
+
+DoesNotExist: Author matching query does not exist.
+
+In [56]: book_three.authors.get(id=2)
+Out[56]: <Author: 2 Emily Dickenson>
+
+In [57]: delete_author = book_three.authors.get(id=2)
+
+In [58]: delete_author.delete()
+Out[58]: (4, {'books_app.Author_books': 3, 'books_app.Author': 1})
+
+In [59]: book_three.authors.all()
+Out[59]: <QuerySet [<Author: 3 Fyodor Dostoeevsky>, <Author: 4 Bill Shakespear>]>
+
+In [60]: author_five
+---------------------------------------------------------------------------
+NameError                                 Traceback (most recent call last)
+<ipython-input-60-622a68d5a95d> in <module>
+----> 1 author_five
+
+NameError: name 'author_five' is not defined
+
+In [61]: author_five = Author.objects.get(id=5)
+
+In [62]: author_five
+Out[62]: <Author: 5 Lau Tzu>
+
+In [63]: author_five.books.add(book_two)
+
+In [64]: author_five.books.all()
+Out[64]: <QuerySet [<Book: 2 Java>]>
+
+In [65]: author_three.books.all()
+Out[65]: <QuerySet [<Book: 1 C#>, <Book: 2 Java>, <Book: 3 Python>, <Book: 4 PHP>]>
+
+In [66]: book_five.authors.all()
+Out[66]: <QuerySet [<Author: 4 Bill Shakespear>]>
+
+In [67]:

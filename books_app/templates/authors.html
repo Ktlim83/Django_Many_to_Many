@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <title>Authors</title>
+</head>
+
+<body>
+    <div class="container">
+        <h1>{{author.first_name}} {{author.last_name}}</h1>
+        <h2>Id:{{author.id}}</h2>
+        <p>Notes: {{author.notes}}</p>
+        <h1>Books</h1>
+        <ul>
+            {% for book in author.books.all %}
+            <li>{{ book.title }}</li>
+            {% endfor %}
+        </ul>
+        <form action="/new_book/{{author.id}}" method="POST">
+            {% csrf_token %}
+            <select class="form-control" name="new_book" id="new_book">
+                {% for book in all_books %}
+                <option value="{{ book.id }}">{{ book.title }}</option>
+                {% endfor %}
+            </select>
+            <button id="btn_add" class="btn btn-primary">Add</button>
+        </form>
+        <form action="/remove_book/{{author.id}}" method="POST">
+            {% csrf_token %}
+            <select class="form-control" name="remove_book" id="remove_book">
+                {% for book in author.books.all %}
+                <option value="{{ book.id }}">{{ book.title }}</option>
+                {% endfor %}
+            </select>
+            <button id="btn_delete" class="btn btn-primary">Delete</button>
+        </form>
+    </div>
+    <a href="/authors_page" type="button" class="btn btn-success">Go Back</a>
+</body>
+
+</html>

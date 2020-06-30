@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <title>Books and Authors</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="col-md-3">
+            <h2>Add a Book</h2>
+            <form action="/add_book" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    <input type="text" name="title" id="title" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="desc">Description</label>
+                    <input type="text" name="desc" id="desc" class="form-control">
+                </div>
+                <button class="btn btn-primary">Add</button>
+            </form>
+        </div>
+        <table class="table table-dark">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Title</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for book in all_books %}
+                <tr>
+                    <td>{{ book.id }}</td>
+                    <td>{{ book.title }}</td>
+                    <td><a href="view_book/{{ book.id }}">View</a> |
+                        <a href="delete_book/{{ book.id }}">Delete</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <a href="/authors_page" type="button" class="btn btn-success">Go to Authors</a>
+</body>
+
+</html>
